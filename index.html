@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trafficity</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bgAnimation" id="bgAnimation">
+    <div class="backgroundAnim"></div>
+  </div>  
+
+  <nav id="nav" class="navbar">
+    <ul class="nav-links container">
+      <li><a class="links" href="#home">Home</a></li>
+      <li><a class="links" href="#about-section">About</a></li>
+      <li><a class="links" href="#register-section">Add Vehicle Information</a></li>
+      <li><a class="links" href="#edit-section">Edit Vehicle</a></li>
+      <li><a class="links" href="#vehicleList">Vehicle List</a></li>
+      <li><a class="links" href="#services-section">Services</a></li>
+      <li><a class="links" href="#contact-section">Gwapitos</a></li>
+    </ul>
+  </nav>
+
+  <article id="home" class="wrapper style1 home-section">
+    <div class="container home-content">
+      <header>
+        <h1>TRAFFICITY</h1>
+      </header>
+      <p>Unleashing innovation, easing congestion.</p>
+    </div>
+  </article>
+
+  <section class="white-section" id="about-section">
+    <h2>About Trafficity</h2>
+    <div class="about-container">
+      <p>
+        Traffic congestion remains a pervasive and stubborn problem for emerging industries. 
+        The alarming issue of daily heavy traffic, not just in Iligan but throughout the entire Philippines,
+        is unsettling for every Filipino greatly affected by its chaos. However, innovators strive to address this challenge by implementing and crafting innovative solutions to optimize traffic flow.
+        These solutions include adaptive traffic lights, rerouting applications, and advanced road information dissemination. All of these innovative ideas have proven effective in alleviating the traffic problem.
+      </p>
+      <p>
+        But what if we were to combine these innovative ideas into a more comprehensive approach? By integrating them and incorporating the latest attributes of emerging technologies, such as Artificial Intelligence (AI),
+        we could achieve even greater results. Wouldn't that be fantastic? "Trafficity" would be delighted to turn this idea into a reality.
+      </p>
+    </div>
+  </section>
+
+  <section class="white-section" id="register-section">
+    <h2>Vehicle Information</h2>
+    <p>Add Vehicle Information.</p>
+    <div class="register-container">
+        <div class="form-container">
+            <form id="register-form">
+                <label for="vehicle_class">Vehicle Class:</label>
+                <input type="number" id="vehicle_class" name="vehicleClass" required><br><br>
+
+                <label for="car-make">Vehicle Manufacturer:</label>
+                <input type="text" id="car-make" name="carMake" required><br><br>
+
+                <label for="car-model">Vehicle Model:</label>
+                <input type="text" id="car-model" name="carModel" required><br><br>
+
+                <label for="license_plate">License Plate:</label>
+                <input type="text" id="license_plate" name="licensePlate" required><br><br>
+
+                <div class="button-container">
+                    <button type="button" class="button" onclick="registerVehicle()">Register</button>
+                </div>
+            </form>
+        </div>
+        <div class="poster-container">
+            <img src="Class_type.jpg" alt="Poster" class="poster-image">
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<section class="white-section" id="edit-and-search-section">
+  <div class="form-container">
+    <form id="searchVehicle-form">
+      <h2>Search for Vehicle</h2>
+      <label for="searchValue">Enter Vehicle ID or License Plate:</label>
+      <input type="text" id="searchValue" name="searchValue" required>
+      <button type="button" class="button" id="searchButton" onclick="searchVehicle()">Search</button>
+    </form>
+
+    <form id="editVehicle-form">
+      <h2>Edit Vehicle Information</h2>
+      <label for="editVehicleClass">Vehicle Class:</label>
+      <input type="number" id="editVehicleClass" name="editVehicleClass" required readonly><br><br>
+
+      <label for="editVehicleManufacturer">Vehicle Manufacturer:</label>
+      <input type="text" id="editVehicleManufacturer" name="editVehicleManufacturer" required readonly><br><br>
+
+      <label for="editVehicleModel">Vehicle Model:</label>
+      <input type="text" id="editVehicleModel" name="editVehicleModel" required readonly><br><br>
+
+      <label for="editLicensePlate">License Plate:</label>
+      <input type="text" id="editLicensePlate" name="editLicensePlate" required readonly><br><br>
+
+      <button type="button" class="button" id="editButton" onclick="enableEditing()">Edit</button>
+      <button type="button" class="button" id="saveButton" onclick="saveVehicleDetails()" disabled>Save</button>
+    </form>
+  </div>
+</section>
+
+<style>
+    /* Default styles for inputs */
+    #editVehicle-form input {
+      width: 90%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #2c2c2c;
+      border-radius: 4px;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+  }
+
+  /* Read-only state */
+  #editVehicle-form input.read-only {
+      background-color: #313131; /* Light gray background */
+  }
+
+  /* Editable state */
+  #editVehicle-form input:not(.read-only) {
+      background-color: white; /* White background */
+  }
+</style>
+
+
+
+
+
+<section class="white-section" id="vehicleList">
+  <h2>List of Vehicles Registered</h2>
+  <div class="table-container">
+      <div class="sort-container">
+          <label for="sortDropdown">Sort by:</label>
+          <select id="sortDropdown" onchange="sortTable()">
+              <option value="vehicleID">Vehicle ID</option>
+              <option value="vehicleManufacturer">Vehicle Manufacturer</option>
+              <option value="vehicleModel">Vehicle Model</option>
+              <option value="vehicleClass">Vehicle Class</option>
+              <option value="licensePlate">License Plate</option>
+          </select>
+      </div>
+      <table>
+          <thead>
+              <tr>
+                  <th>Vehicle ID</th>
+                  <th>Vehicle Manufacturer</th>
+                  <th>Vehicle Model</th>
+                  <th>Vehicle Class</th>
+                  <th>License Plate</th>
+                  <th>Action</th>
+              </tr>
+          </thead>
+          <tbody id="tableBody">
+          </tbody>
+      </table>
+  </div>
+</section>
+
+
+
+  <section class="white-section" id="services-section">
+    <h2>Services</h2>
+    <ul class="horizontal-list">
+      <li>
+        <img src="rerouting.jpg" alt="Re-routing Logo" class="service-logo">
+        Re-routing
+      </li>
+      <li>
+        <img src="live_viewing.jpg" alt="Live-viewing GUI Logo" class="service-logo">
+        Live-viewing GUI
+      </li>
+      <li>
+        <img src="notification.jpg" alt="Traffic Notification Logo" class="service-logo">
+        Traffic Notification
+      </li>
+    </ul>
+  </section>
+
+  <section class="white-section" id="contact-section">
+    <h2>Developers</h2>
+    
+    <div class="contact-container">
+      <div class="contact-card">
+        <img src="artgarcia.jpg" alt="Art Sumondong" class="contact-image">
+        <p>Art Sumondong</p>
+        <div class="social-links">
+          <a href="https://www.facebook.com/artkent.sumondong" target="_blank">Facebook</a>
+          <a href="https://www.linkedin.com/in/art-kent-sumondong-1512962aa/" target="_blank">LinkedIn</a>
+          <a href="https://github.com/arrcc" target="_blank">GitHub</a>
+        </div>
+      </div>
+      <div class="contact-card">
+        <img src="h (1) (1).png" alt="Kayron Ross Rivera" class="contact-image">
+        <p>Kayron Ross Rivera</p>
+        <div class="social-links">
+          <a href="https://www.facebook.com/kayronrossmorales.rivera" target="_blank">Facebook</a>
+          <a href="https://www.linkedin.com/in/kayron-ross-rivera-057b322aa/" target="_blank">LinkedIn</a>
+          <a href="https://github.com/friend1profile" target="_blank">GitHub</a>
+        </div>
+      </div>
+      <div class="contact-card">
+        <img src="IMG_20240514_223530.jpg" alt="Franz Aclao" class="contact-image">
+        <p>Franz Aclao</p>
+        <div class="social-links">
+          <a href="https://www.facebook.com/franzxavier.aclao" target="_blank">Facebook</a>
+          <a href="https://www.linkedin.com/in/franz-xavier-aclao-3306882ab/" target="_blank">LinkedIn</a>
+          <a href="https://github.com/friend2profile" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <script>
+    function registerVehicle() {
+    const vehicleClass = document.getElementById('vehicle_class').value.trim();
+    const carMake = document.getElementById('car-make').value.trim();
+    const carModel = document.getElementById('car-model').value.trim();
+    const licensePlate = document.getElementById('license_plate').value.trim();
+
+    if (!vehicleClass || !carMake || !carModel || !licensePlate) {
+        alert('Please fill in all fields.');
+        return;
+    }
+
+    const url = 'http://localhost:3000/register-vehicle';
+    const data = {
+        vehicleClass: vehicleClass,
+        carMake: carMake,
+        carModel: carModel,
+        licensePlate: licensePlate
+    };
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(error => {
+                throw new Error(error.message);
+            });
+        }
+        return response.text();
+    })
+    .then(responseText => {
+        console.log('Server response:', responseText);
+        alert('Vehicle information registered successfully!');
+        document.getElementById('register-form').reset();
+        window.location.reload();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        if (error.message === 'License already registered') {
+            alert('License already registered');
+        } else {
+            alert('Error registering vehicle information');
+        }
+    });
+}
+
+    // Function to search for a vehicle by ID or License Plate
+    function fetchVehicles() {
+    const searchValue = document.getElementById('searchValue').value.trim();
+
+    // Modify your fetch call based on search criteria
+    let url = 'http://localhost:3000/vehicles';
+    if (searchValue) {
+        url += `?search=${encodeURIComponent(searchValue)}`;
+    }
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = ''; // Clear previous data
+            data.forEach(vehicle => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${vehicle.id}</td>
+                    <td>${vehicle.car_make}</td>
+                    <td>${vehicle.car_model}</td>
+                    <td>${vehicle.vehicle_class}</td>
+                    <td>${vehicle.license_plate}</td>
+                    <td>
+                        
+                        <button onclick="confirmDelete(${vehicle.id})">Delete</button>
+                    </td> 
+                `;
+                tableBody.appendChild(row);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching vehicle data:', error);
+        });
+}
+
+// Function to search for a vehicle by ID or License Plate
+let originalLicensePlate; // Define originalLicensePlate at a global scope
+
+// Function to search for a vehicle by ID or License Plate
+function searchVehicle() {
+    const searchValue = document.getElementById('searchValue').value.trim();
+
+    if (!searchValue) {
+        alert('Please enter a vehicle ID or license plate.');
+        return;
+    }
+
+    const url = new URL('http://localhost:3000/vehicles/search');
+    if (!isNaN(searchValue)) {
+        url.searchParams.append('id', searchValue);
+    } else {
+        url.searchParams.append('licensePlate', searchValue);
+    }
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Vehicle not found.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Populate form fields with retrieved data
+            document.getElementById('editVehicleClass').value = data.vehicle_class;
+            document.getElementById('editVehicleManufacturer').value = data.car_make;
+            document.getElementById('editVehicleModel').value = data.car_model;
+            document.getElementById('editLicensePlate').value = data.license_plate;
+
+            // Store the original license plate
+            originalLicensePlate = data.license_plate;
+
+            // Disable the input fields after populating data
+            toggleInputFields(true);
+            document.getElementById('saveButton').disabled = true;
+        })
+        .catch(error => {
+            console.error('Error fetching vehicle details:', error);
+            alert('Error fetching vehicle details');
+        });
+}
+function enableEditing() {
+    toggleInputFields(false); // Enable editing
+    document.getElementById('saveButton').disabled = false; // Enable save button
+}
+
+function saveVehicleDetails() {
+    // Here you would implement your save logic, such as updating the database
+    // For demonstration, let's assume we disable editing and save button after "saving"
+    toggleInputFields(true); // Disable editing
+    document.getElementById('saveButton').disabled = true; // Disable save button
+}
+
+function toggleInputFields(readOnly) {
+    const inputs = document.querySelectorAll('#editVehicle-form input');
+    inputs.forEach(input => {
+        input.readOnly = readOnly;
+        if (readOnly) {
+            input.classList.add('read-only');
+        } else {
+            input.classList.remove('read-only');
+        }
+    });
+}
+
+// Function to save updated vehicle details to the database
+// Function to save updated vehicle details to the database
+function saveVehicleDetails() {
+    const vehicleId = document.getElementById('searchValue').value.trim();
+    const vehicleClass = document.getElementById('editVehicleClass').value;
+    const carMake = document.getElementById('editVehicleManufacturer').value;
+    const carModel = document.getElementById('editVehicleModel').value;
+    const licensePlate = document.getElementById('editLicensePlate').value;
+
+    // Perform the update without checking the license plate
+    saveVehicle(vehicleId, vehicleClass, carMake, carModel, licensePlate);
+}
+
+// Helper function to save vehicle details
+function saveVehicle(vehicleId, vehicleClass, carMake, carModel, licensePlate) {
+    fetch(`http://localhost:3000/vehicles/${vehicleId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ vehicleClass, carMake, carModel, licensePlate })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error saving vehicle details.');
+        }
+        return response.text();
+    })
+    .then(data => {
+        alert(data);
+        // Disable the input fields again after saving
+        toggleInputFields(true);
+        document.getElementById('saveButton').disabled = true;
+        // Fetch and update the vehicle list
+        fetchVehicles();
+    })
+    .catch(error => {
+        console.error('Error saving vehicle details:', error);
+        alert('Error saving vehicle details');
+    });
+}
+
+
+// Function to confirm deletion of a vehicle
+function confirmDelete(vehicleId) {
+    const confirmation = confirm('Are you sure you want to delete this data?');
+    if (confirmation) {
+        deleteVehicle(vehicleId);
+    }
+}
+
+// Function to delete a vehicle
+function deleteVehicle(vehicleId) {
+    fetch(`http://localhost:3000/delete-vehicle/${vehicleId}`, {
+        method: 'DELETE'
+    })
+    .then(response => response.text())
+    .then(data => {
+        alert(data);
+        // Fetch and display the updated list of vehicles
+        fetchVehicles();
+    })
+    .catch(error => {
+        console.error('Error deleting vehicle:', error);
+        alert('Error deleting vehicle');
+    });
+}
+
+// Function to edit a vehicle
+function editVehicle(vehicleId) {
+    const searchValueInput = document.getElementById('searchValue');
+    searchValueInput.value = vehicleId;
+    searchVehicle();
+    
+}
+
+// Function to edit a vehicle
+function editVehicle(vehicleId) {
+    const searchValueInput = document.getElementById('searchValue');
+    searchValueInput.value = vehicleId;
+    searchVehicle();
+    enableEditing();
+}
+
+function sortTable() {
+    const table = document.querySelector('table tbody');
+    const rows = Array.from(table.rows);
+    const sortBy = document.getElementById('sortDropdown').value;
+    
+    let columnIndex;
+    let isNumeric = false;
+
+    switch (sortBy) {
+        case 'vehicleID':
+            columnIndex = 0;
+            isNumeric = true;
+            break;
+        case 'vehicleManufacturer':
+            columnIndex = 1;
+            break;
+        case 'vehicleModel':
+            columnIndex = 2;
+            break;
+        case 'vehicleClass':
+            columnIndex = 3;
+            isNumeric = true;
+            break;
+        case 'licensePlate':
+            columnIndex = 4;
+            break;
+    }
+
+    rows.sort((a, b) => {
+        let cellA = a.cells[columnIndex].innerText;
+        let cellB = b.cells[columnIndex].innerText;
+        
+        if (isNumeric) {
+            cellA = parseFloat(cellA);
+            cellB = parseFloat(cellB);
+            return cellA - cellB;
+        } else {
+            cellA = cellA.toLowerCase();
+            cellB = cellB.toLowerCase();
+            
+            if (cellA < cellB) return -1;
+            if (cellA > cellB) return 1;
+            return 0;
+        }
+    });
+
+    // Append sorted rows back to the table body
+    rows.forEach(row => table.appendChild(row));
+}
+    document.addEventListener('DOMContentLoaded', function() {
+        // Fetch and display the list of vehicles when the page is loaded
+        fetchVehicles();
+
+        // Add event listener to the search button
+        document.getElementById('searchButton').addEventListener('click', searchVehicle);
+
+        // Function to handle form submission
+        document.getElementById('editVehicle-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            saveVehicleDetails();
+        });
+    });
+</script>
+
+
+</body>
+</html>
+
